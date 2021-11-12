@@ -1,0 +1,42 @@
+@import "./reset.css"
+
+html
+  display: flex
+  flex-direction: row
+  justify-content: stretch
+  align-items: stretch
+  background-color: blueviolet
+  height: 100%
+  font-size: 1.5rem
+
+body
+  margin: 1%
+  padding: 1%
+  flex-grow: 1
+  display: flex
+  flex-direction: column
+  align-items: center
+  justify-content: flex-start
+  background-color: antiquewhite
+
+#app
+  background-color: aqua
+  flex-grow: 1
+  margin-top: 1%
+  width: 100%
+
+.control
+  display: flex
+  width: 90%
+  flex-direction: row
+  justify-content: flex-start
+  align-items: center
+  input, label, output
+    margin: 1%
+  #control-sens
+    width: 50%
+  #control-down, #control-up
+    width: 8rem
+    padding: 0.5rem
+    font-size: 1rem
+

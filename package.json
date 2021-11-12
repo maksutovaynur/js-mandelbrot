@@ -1,0 +1,25 @@
+{
+  "name": "p1",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "html-webpack-plugin": "^5.3.2",
+    "webpack": "^5.54.0",
+    "webpack-cli": "^4.8.0",
+    "webpack-dev-server": "^4.3.0"
+  },
+  "dependencies": {
+    "@pixi/events": "^6.2.0",
+    "css-loader": "^6.5.1",
+    "pixi.js": "^6.2.0",
+    "sass": "^1.43.4",
+    "sass-loader": "^12.3.0",
+    "style-loader": "^3.3.1",
+    "ts-shader-loader": "^1.0.6"
+  },
+  "scripts": {
+    "start": "webpack-dev-server --history-api-fallback --progress --host 0.0.0.0 --port 8888",
+    "build": "webpack"
+  }
+}
