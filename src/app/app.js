@@ -24,42 +24,57 @@ export default function createApp(parent, scaleControls, shaderIter) {
 
 function setupEvents(stage, shape, scaleControls) {
     stage.interactive = true;
+    let cx = undefined, cy = undefined, ccx, ccy, sx = 0, sy = 0;
+    refreshShapeCache();
+
     stage.addEventListener('pointerdown', onDragStart);
-    let cx = undefined, cy = undefined, sx = 0, sy = 0;
+    stage.addEventListener('pointerup', onDragEnd);
+    stage.addEventListener('pointerupoutside', onDragEnd);
+    stage.addEventListener('wheel', onWheel);
+
+    if (scaleControls.up !== undefined) {
+        const zeroPoint = cx === undefined ? {x: sx, y: sy} : {c: cx, y: cy};
+        scaleControls.up.addEventListener('mousedown', () => wheelTrack(-100, zeroPoint));
+        scaleControls.down.addEventListener('mousedown', () => wheelTrack(+100, zeroPoint));
+    }
+
     function refreshShapeCache(){
         sx = shape.position.x;
         sy = shape.position.y;
     }
-    refreshShapeCache();
+
     function onDragStart(e) {
-        console.log('OnDragStart');
         stage.addEventListener('pointermove', onDragMove);
         cx = e.global.x;
         cy = e.global.y;
+        ccx = e.global.x;
+        ccy = e.global.y;
         refreshShapeCache();
     }
-    stage.addEventListener('pointerup', onDragEnd);
-    stage.addEventListener('pointerupoutside', onDragEnd);
+
     function onDragEnd(e) {
         stage.removeEventListener('pointermove', onDragMove);
     }
+
     function onDragMove(e) {
         const deltaX = e.global.x - cx;
         const deltaY = e.global.y - cy;
-        console.log(deltaX);
-        shape.position.set(
-            sx + deltaX,
-            sy + deltaY,
-        );
+
+        if (!isScaleMode()) shape.position.set(sx + deltaX, sy + deltaY);
+        else wheelTrack(deltaY, {x: ccx, y: ccy});
+
         cx = e.global.x;
         cy = e.global.y;
         refreshShapeCache();
     }
 
-    stage.addEventListener('wheel', onWheel);
-    const zeroPoint = cx === undefined ? {x: sx, y: sy} : {c: cx, y: cy};
-    scaleControls.up.addEventListener('mousedown', () => wheelTrack(-100, zeroPoint));
-    scaleControls.down.addEventListener('mousedown', () => wheelTrack(+100, zeroPoint));
+    function isScaleMode() {
+        const {scale} = scaleControls.mode;
+        if (scale !== undefined) {
+            if (scale.checked) return true;
+        }
+        return false;
+    }
 
     function onWheel(e) {
         wheelTrack(e.deltaY, e.global);
@@ -67,7 +82,7 @@ function setupEvents(stage, shape, scaleControls) {
 
     function wheelTrack(delta, point) {
         const {value: sensVal, max: sensMax} = scaleControls.sens;
-        const {checked: inverted} = scaleControls.inv;
+        const inverted = scaleControls.inv ? scaleControls.inv.checked : true;
 
         const sensitivity = (Math.exp(sensVal / sensMax) - 1) / 250;
         const deltaScale = Math.exp((inverted ? -1 : 1) * delta * sensitivity);

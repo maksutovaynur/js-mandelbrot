@@ -8,18 +8,16 @@
 <body>
 <h3>Aynur's Simulator</h3>
 <div class="control">
-    <input type="button" id="control-down" value="Scale -"/>
-    <input type="button" id="control-up" value="Scale +"/>
+    <input type="radio" id="control-or-scale" name="scaleOrMove" value="scale">
+    <label for="control-or-scale">Mode scale</label>
+    <input type="radio" id="control-or-move" name="scaleOrMove" value="move" checked>
+    <label for="control-or-scale">Mode move</label>
     <label for="control-sens">Sensitivity</label>
     <input
             type="range" id="control-sens" name="sens"
             min="1" max="10" step="0.5" value="3"
             onchange="this.nextElementSibling.value = this.value">
     <output>3</output>
-</div>
-<div>
-    <label for="control-inv">Invert scale</label>
-    <input type="checkbox" id="control-inv" checked="checked">
 </div>
 <div id="app"></div>
 </body>

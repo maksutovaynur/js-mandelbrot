@@ -7,7 +7,11 @@ const app = createApp(
         sens: document.getElementById('control-sens'),
         inv: document.getElementById('control-inv'),
         down: document.getElementById('control-down'),
-        up: document.getElementById('control-up')
+        up: document.getElementById('control-up'),
+        mode: {
+            scale: document.getElementById('control-or-scale'),
+            move: document.getElementById('control-or-move'),
+        }
     },
     128
 );
