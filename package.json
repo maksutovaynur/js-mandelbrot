@@ -15,8 +15,7 @@
     "pixi.js": "^6.2.0",
     "sass": "^1.43.4",
     "sass-loader": "^12.3.0",
-    "style-loader": "^3.3.1",
-    "ts-shader-loader": "^1.0.6"
+    "style-loader": "^3.3.1"
   },
   "scripts": {
     "start": "webpack-dev-server --history-api-fallback --progress --host 0.0.0.0 --port 8888",
